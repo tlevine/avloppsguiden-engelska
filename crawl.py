@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
+from requests import get
 from dumptruck import DumpTruck
 from lxml.html import fromstring
-from urllib2 import urlopen
 from random import normalvariate
 from time import sleep
 
@@ -32,7 +32,8 @@ dt.commit()
 # Crawl
 while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
     url = dt.execute('select url from todo limit 1')[0]['url']
-    page_source = urlopen(url).read()
+    print 'Crawling %s' % url
+    page_source = get(url).text.decode('utf-8')
 
     # Save that page
     dt.insert({'url': url, 'page_source': page_source}, 'page_sources')
@@ -45,5 +46,4 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
 
     dt.execute('delete from todo where url = ?', [url])
     dt.commit()
-    print 'Crawled %s' % url
     randomsleep()
