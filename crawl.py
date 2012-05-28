@@ -33,7 +33,10 @@ dt.commit()
 while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
     url = dt.execute('select url from todo limit 1')[0]['url']
     print 'Crawling %s' % url
-    page_source = get(url).text
+    try:
+        page_source = get(url).text
+    except TypeError:
+        page_source = get(url).content
 #   page_source = page_source.decode('utf-8')
 
     # Save that page
