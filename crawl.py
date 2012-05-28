@@ -2,6 +2,8 @@
 from dumptruck import DumpTruck
 from lxml.html import fromstring
 from urllib2 import urlopen
+from random import normalvariate
+from time import sleep
 
 dt = DumpTruck(dbname = 'avloppsguiden.sqlite', auto_commit = False)
 
@@ -37,11 +39,11 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
 
     # Look for more pages
     html = fromstring(page_source)
-    html.make_links_absolute(base_href = url)
-    todo = [{'url': url_to_visit} for url_to_visit in html.xpath('//a/@href')]
+    html.make_links_absolute(url)
+    todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
     dt.insert(todo, 'todo')
 
-    dt.execute('delete from todo where url = ?', url)
+    dt.execute('delete from todo where url = ?', [url])
     dt.commit()
     print 'Crawled %s' % url
     randomsleep()
