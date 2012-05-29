@@ -62,7 +62,9 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
         html = fromstring(page_source)
         html.make_links_absolute(url)
         todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
-        dt.insert(todo, 'todo')
+        if len(todo) > 0:
+            dt.insert(todo, 'todo')
+        dt.execute('delete from todo where url not like "%avloppsguiden%"')
         dt.execute('''
 delete from todo where url in (
   select url from page_sources union select url from nontext_pages
