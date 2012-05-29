@@ -26,13 +26,19 @@ dt.execute('''
 create table if not exists nontext_pages (
   url text not null,
   filename text not null,
-  unique(url) on conflict ignore
+  unique(url)
 );''')
 
 dt.execute('''
 create table if not exists todo (
   url text not null,
   unique(url) on conflict ignore
+);''')
+
+dt.execute('''
+create table if not exists not_html (
+  url text not null,
+  unique(url) 
 );''')
 dt.insert({'url': 'http://husagare.avloppsguiden.se/'}, 'todo')
 dt.commit()
@@ -58,14 +64,21 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
         # Save the page
         dt.insert({'url': url, 'page_source': page_source}, 'page_sources')
 
-        # Assume it's HTML and look for more pages
-        html = fromstring(page_source)
-        html.make_links_absolute(url)
-        todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
-        if len(todo) > 0:
-            dt.insert(todo, 'todo')
-        dt.execute('delete from todo where url not like "%avloppsguiden%"')
-        dt.execute('''
+        try:
+            # Assume it's HTML.
+            html = fromstring(page_source)
+        except ValueError:
+            # Not HTML
+            dt.insert({'url': url}, 'not_html')
+
+        else:
+            # Look for more pages
+            html.make_links_absolute(url)
+            todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
+            if len(todo) > 0:
+                dt.insert(todo, 'todo')
+            dt.execute('delete from todo where url not like "%avloppsguiden%"')
+            dt.execute('''
 delete from todo where url in (
   select url from page_sources union select url from nontext_pages
 )''')
