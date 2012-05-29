@@ -26,7 +26,7 @@ dt.execute('''
 create table if not exists nontext_pages (
   url text not null,
   filename text not null,
-  unique(url)
+  unique(url) on conflict ignore
 );''')
 
 dt.execute('''
@@ -63,6 +63,10 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
         html.make_links_absolute(url)
         todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
         dt.insert(todo, 'todo')
+        dt.execute('''
+delete from todo where url in (
+  select url from page_sources union select url from nontext_pages
+)''')
 
     dt.execute('delete from todo where url = ?', [url])
     dt.commit()
