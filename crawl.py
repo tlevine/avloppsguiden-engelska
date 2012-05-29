@@ -78,6 +78,7 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
             if len(todo) > 0:
                 dt.insert(todo, 'todo')
             dt.execute('delete from todo where url not like "%avloppsguiden%"')
+            dt.execute('delete from todo where url like "mailto:%"')
             dt.execute('''
 delete from todo where url in (
   select url from page_sources union select url from nontext_pages
