@@ -4,6 +4,7 @@ from dumptruck import DumpTruck
 from lxml.html import fromstring
 from random import normalvariate
 from time import sleep
+import os
 
 dt = DumpTruck(dbname = 'avloppsguiden.sqlite', auto_commit = False)
 
@@ -22,6 +23,13 @@ create table if not exists page_sources (
 );''')
 
 dt.execute('''
+create table if not exists nontext_pages (
+  url text not null,
+  filename text not null,
+  unique(url)
+);''')
+
+dt.execute('''
 create table if not exists todo (
   url text not null,
   unique(url) on conflict ignore
@@ -34,19 +42,27 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
     url = dt.execute('select url from todo limit 1')[0]['url']
     print 'Crawling %s' % url
     try:
+        # Is it plain text?
         page_source = get(url).text
+
     except TypeError:
-        page_source = get(url).content
-#   page_source = page_source.decode('utf-8')
+        # I guess not
+        filename = url.replace('/', '_')
+        path = os.path.join('.', 'binary_files', filename)
+        os.system("wget -O '%s' '%s'" % (path, url))
 
-    # Save that page
-    dt.insert({'url': url, 'page_source': page_source}, 'page_sources')
+        # Save the reference
+        dt.insert({'url': url, 'filename': filename}, 'nontext_pages')
 
-    # Look for more pages
-    html = fromstring(page_source)
-    html.make_links_absolute(url)
-    todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
-    dt.insert(todo, 'todo')
+    else:
+        # Save the page
+        dt.insert({'url': url, 'page_source': page_source}, 'page_sources')
+
+        # Assume it's HTML and look for more pages
+        html = fromstring(page_source)
+        html.make_links_absolute(url)
+        todo = [{'url': unicode(url_to_visit)} for url_to_visit in html.xpath('//a/@href')]
+        dt.insert(todo, 'todo')
 
     dt.execute('delete from todo where url = ?', [url])
     dt.commit()
