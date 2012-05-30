@@ -1,10 +1,11 @@
 #!/usr/bin/env python2
+import os
 from requests import get
 from dumptruck import DumpTruck
 from lxml.html import fromstring
 from random import normalvariate
 from time import sleep
-import os
+from unidecode import unidecode
 
 dt = DumpTruck(dbname = 'avloppsguiden.sqlite', auto_commit = False)
 
@@ -53,7 +54,7 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
 
     except TypeError:
         # I guess not
-        filename = url.replace('/', '_')
+        filename = unidecode(url.replace('/', '_'))
         path = os.path.join('.', 'binary_files', filename)
         os.system("wget -O '%s' '%s'" % (path, url))
 
