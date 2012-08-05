@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+# Repository directory
+BASEDIR=husagare
+
+if [ -e $BASEDIR ]
+  then
+  echo Directory $BASEDIR exists\; remove it to generate the repository.
+  exit 1
+fi
+
+mkdir -p $BASEDIR
+
+# Copy stuff
+for url in $(sqlite3 avloppsguiden.sqlite 'SELECT url FROM page_sources WHERE url LIKE "http://husagare.avloppsguiden.se%";' |sed -n -e /html$/p -e '/\/$/p' )
+  do
+  file=$BASEDIR/$(echo "${url}"|sed -e 's+/$+/index.html+' -e 's+http://husagare.avloppsguiden.se/++')
+  mkdir -p $file && rmdir $file
+  sqlite3 avloppsguiden.sqlite "SELECT page_source FROM page_sources WHERE url='${url}';" > "$file"
+done
