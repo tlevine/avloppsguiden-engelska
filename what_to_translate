@@ -13,7 +13,6 @@ The section `http://husagare.avloppsguiden.se` seems most interesting to me.
 Here are a lot of the files from that section. If we narrow this down a bit,
 we can decide where to start translating.
 
-* http://husagare.avloppsguiden.se/
 * http://husagare.avloppsguiden.se/anlita-en-konsult.html
 * http://husagare.avloppsguiden.se/anlita-en-markentreprenör.html
 * http://husagare.avloppsguiden.se/ansvar-och-roller.html
@@ -73,18 +72,12 @@ we can decide where to start translating.
 * http://husagare.avloppsguiden.se/planera-ditt-avlopp-steg-för-steg.html
 * http://husagare.avloppsguiden.se/planera-ditt-avlopp.html
 * http://husagare.avloppsguiden.se/prefabricerat-filter.html
-* http://husagare.avloppsguiden.se/press.html
 * http://husagare.avloppsguiden.se/provgrop.html
 * http://husagare.avloppsguiden.se/regeringens-havsmiljöpolitik.html
 * http://husagare.avloppsguiden.se/rekordstort-intresse-för-konferensen-vatten-avlopp-och-kretslopp.html
 * http://husagare.avloppsguiden.se/resorptionsdike.html
 * http://husagare.avloppsguiden.se/roliga-sidan.html
 * http://husagare.avloppsguiden.se/rotzonsanläggning.html
-* http://husagare.avloppsguiden.se/rss/aktuellt-71.xml
-* http://husagare.avloppsguiden.se/rss/avloppsfakta-44.xml
-* http://husagare.avloppsguiden.se/rss/avloppsteknik-29.xml
-* http://husagare.avloppsguiden.se/rss/planera-ditt-av-23.xml
-* http://husagare.avloppsguiden.se/rssfeeds.html
 * http://husagare.avloppsguiden.se/satsning-på-små-avlopp-ger-nya-jobb-och-bättre-miljö.html
 * http://husagare.avloppsguiden.se/siffror-om-avlopp.html
 * http://husagare.avloppsguiden.se/slamavskiljare.html
@@ -93,7 +86,6 @@ we can decide where to start translating.
 * http://husagare.avloppsguiden.se/sprayfilter.html
 * http://husagare.avloppsguiden.se/stort-fosforfilter.html
 * http://husagare.avloppsguiden.se/svea/avloppsguiden_checklista_avlopp.pdf
-* http://husagare.avloppsguiden.se/svea/flash/
 * http://husagare.avloppsguiden.se/svea/pdf/sveasavloppsguide.pdf
 * http://husagare.avloppsguiden.se/svea/slamavskiljare.jpg
 * http://husagare.avloppsguiden.se/ta-hand-om-urin-latrin-och-slam-på-din-egen-tomt.html
@@ -128,3 +120,5 @@ we can decide where to start translating.
 * http://husagare.avloppsguiden.se/översilning.html
 * http://husagare.avloppsguiden.se/övriga-torrtoaletter-.html
 * http://husagare.avloppsguiden.se/”bästa-slamdiskussionen-någonsin”.html
+
+## Technical stuff
