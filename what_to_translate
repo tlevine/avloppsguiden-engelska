@@ -134,3 +134,8 @@ How about we edit the files in the English repository (with whatever software
 we like) and commit them there? If you don't want to use git, you can use
 GitHub's in-browser code editor to transfer edits between the git repository
 and whatever software you translate in.
+
+## End
+I think some reasonable next steps are
+* We translate a few pages.
+* I download the Javascript and stylesheets and start serving the site as we translate it.
