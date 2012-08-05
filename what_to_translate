@@ -3,8 +3,8 @@ Where do we start translating?
 
 ## Site files
 All of the urls that I found on the site are in `urls.csv`. This list isn't
-complete; I stopped it because the forum was taking a while. If there's a
-particular section that interests you, I can crawl that section more.
+complete; I stopped it because the forum was taking a while, but if there's
+a particular section that interests you, I can crawl that section more.
 
 ## Where to start
 
