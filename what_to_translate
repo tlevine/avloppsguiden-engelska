@@ -122,3 +122,15 @@ we can decide where to start translating.
 * http://husagare.avloppsguiden.se/”bästa-slamdiskussionen-någonsin”.html
 
 ## Technical stuff
+
+The aforementioned files are organized in the appropriate structure
+[here](https://github.com/tlevine/avloppsguiden-husagare). I used this
+repository as the start of an
+[English repository](https://github.com/tlevine/avloppsguiden-husagare-english).
+These repository don't include Javascript or stylesheets because I didn't
+download them yet, but we shouldn't need those to start translating. 
+
+How about we edit the files in the English repository (with whatever software
+we like) and commit them there? If you don't want to use git, you can use
+GitHub's in-browser code editor to transfer edits between the git repository
+and whatever software you translate in.
