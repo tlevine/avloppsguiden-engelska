@@ -13,10 +13,20 @@ fi
 
 mkdir -p $BASEDIR
 
-# Copy stuff
+# Copy html
 for url in $(sqlite3 avloppsguiden.sqlite 'SELECT url FROM page_sources WHERE url LIKE "http://husagare.avloppsguiden.se%";' |sed -n -e /html$/p -e '/\/$/p' )
   do
   file=$BASEDIR/$(echo "${url}"|sed -e 's+/$+/index.html+' -e 's+http://husagare.avloppsguiden.se/++')
   mkdir -p $file && rmdir $file
   sqlite3 avloppsguiden.sqlite "SELECT page_source FROM page_sources WHERE url='${url}';" > "$file"
+done
+
+# Copy pdf and doc
+for url in $(sqlite3 avloppsguiden.sqlite 'SELECT url FROM nontext_pages WHERE url LIKE "http://husagare.avloppsguiden.se%";' |sed -n -e 's/ /|/g' -e /doc$/p -e /pdf$/p -e '/\/$/p')
+  do
+  url=$(echo "${url}" | tr '|' ' ')
+  file=$BASEDIR/$(echo "${url}"|sed -e 's+/$+/index.html+' -e 's+http://husagare.avloppsguiden.se/++')
+  mkdir -p $file && rmdir $file
+  wget -O "${file}" "${url}"
+  sleep 3s
 done
