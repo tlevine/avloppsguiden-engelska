@@ -54,7 +54,7 @@ while dt.execute('select count(*) as c from todo')[0]['c'] > 0:
 
     except TypeError:
         # I guess not
-        filename = unidecode(url.replace('/', '_'))
+        filename = url.encode('ascii').replace('/', '_')
         path = os.path.join('.', 'binary_files', filename)
         os.system("wget -O '%s' '%s'" % (path, url))
 
